@@ -96,6 +96,9 @@ public class App extends Application {
         gridPane.add(hbox8, 0, 15);
         gridPane.add(validateExpenses, 0, 16);
         
+        //
+        ValidateNumDays(numDaysBtn, numDaysField);
+        
         root.getChildren().add(gridPane);
         Scene scene = new Scene(root, 300, 300);
         mainStage.setScene(scene);
@@ -104,6 +107,94 @@ public class App extends Application {
 
     public static void main(String[] args) {
         launch();
+    }
+    
+    public static void ValidateNumDays(Button validateButton, TextField textField){
+        validateButton.setOnAction(event -> {
+            int numDays = 0;
+            try{
+                numDays = Integer.parseInt(textField.getText());
+            }catch(NumberFormatException e){
+                System.out.println("BAD");
+            }
+        });
+    }
+    
+    public static void ValidateAmountAirfare(Button validateButton, TextField textField){
+        validateButton.setOnAction(event -> {
+            double amount = 0;
+            try{
+                amount = Integer.parseInt(textField.getText());
+            }catch(NumberFormatException e){
+                System.out.println("BAD");
+            }
+        });
+    }
+    
+    public static void validateAmountCarRental(Button validateButton, TextField textField){
+        validateButton.setOnAction(event -> {
+            double amount = 0;
+            try{
+                amount = Integer.parseInt(textField.getText());
+            }catch(NumberFormatException e){
+                System.out.println("BAD");
+            }
+        });
+    }
+    
+    public static void validateNumMilesDriven(Button validateButton, TextField textField){
+        validateButton.setOnAction(event -> {
+            double numMiles = 0;
+            try{
+                numMiles = Integer.parseInt(textField.getText());
+            }catch(NumberFormatException e){
+                System.out.println("BAD");
+            }
+        });
+    }
+    
+    public static void validateAmountParking(Button validateButton, TextField textField){
+        validateButton.setOnAction(event -> {
+            int amount = 0;
+            try{
+                amount = Integer.parseInt(textField.getText());
+            }catch(NumberFormatException e){
+                System.out.println("BAD");
+            }
+        });
+    }
+    
+    public static void validateAmountTaxiCharges(Button validateButton, TextField textField){
+        validateButton.setOnAction(event -> {
+            double amount = 0;
+            try{
+                amount = Integer.parseInt(textField.getText());
+            }catch(NumberFormatException e){
+                System.out.println("BAD");
+            }
+        });
+    }
+    
+    public static void validateConRefFee(Button validateButton, TextField textField){
+        validateButton.setOnAction(event -> {
+            double amount = 0;
+            try{
+                amount = Integer.parseInt(textField.getText());
+            }catch(NumberFormatException e){
+                System.out.println("BAD");
+            }
+        });
+    }
+    
+    public static void validateLodgingCharges(Button validateButton, TextField textField){
+        validateButton.setOnAction(event -> {
+            double amount = 0;
+            try{
+                amount = Integer.parseInt(textField.getText());
+            }catch(NumberFormatException e){
+                System.out.println("BAD");
+            }
+        });
     }
 
 }
