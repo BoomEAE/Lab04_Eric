@@ -16,7 +16,16 @@ import javafx.scene.layout.BorderPane;
  * JavaFX App
  */
 public class App extends Application {
-
+    private static int numDays = 0;
+    private static int amountAirfare = 0;
+    private static int amountCarRental = 0;
+    private static int numMilesDriven = 0;
+    private static int amountParkingFees = 0;
+    private static int amountTaxiCharges = 0;
+    private static int conRegFees = 0;
+    private static int lodgingCharges = 0;
+    private static int isValidCounter = 0;
+    
     @Override
     public void start(Stage mainStage) {
         
@@ -57,15 +66,19 @@ public class App extends Application {
         TextField lodgingChagesField = new TextField();
         
         //Buttons for validation
-        Button numDaysBtn = new Button();
-        Button amoutAirfareBtn = new Button();
-        Button amoutCarRentalBtn = new Button();
-        Button numMilesDrivenBtn = new Button();
-        Button amountParkingBtn = new Button();
-        Button taxiChargesBtn = new Button();
-        Button conRegFeeBtn = new Button();
-        Button lodgingChagesBtn = new Button();
-        Button validateExpenses = new Button();
+        Button numDaysBtn = new Button("Validate");
+        Button amoutAirfareBtn = new Button("Validate");
+        Button amoutCarRentalBtn = new Button("Validate");
+        Button numMilesDrivenBtn = new Button("Validate");
+        Button amountParkingBtn = new Button("Validate");
+        Button taxiChargesBtn = new Button("Validate");
+        Button conRegFeeBtn = new Button("Validate");
+        Button lodgingChagesBtn = new Button("Validate");
+        Button validateExpenses = new Button("Validate");
+        validateExpenses.setDisable(true);
+        
+        //
+        validateExpenses.setOnKeyTyped(event -> ValidateFields(validateExpenses));
         
         //Adding to hboxs
         hbox1.getChildren().addAll(numDaysField, numDaysBtn);
@@ -97,10 +110,49 @@ public class App extends Application {
         gridPane.add(validateExpenses, 0, 16);
         
         //
-        ValidateNumDays(numDaysBtn, numDaysField);
+        ValidateNumDays(numDaysBtn, validateExpenses, numDaysField);
+        ValidateAmountAirfare(amoutAirfareBtn, validateExpenses, amoutAirfareField);
+        validateAmountCarRental(amoutCarRentalBtn, validateExpenses, amoutCarRentalField);
+        validateNumMilesDriven(numMilesDrivenBtn, validateExpenses, numMilesDrivenField);
+        validateAmountParking(amountParkingBtn, validateExpenses, amountParkingField);
+        validateAmountTaxiCharges(taxiChargesBtn, validateExpenses, taxiChargesField);
+        validateConRegFees(conRegFeeBtn, validateExpenses, conRegFeeFIeld);
+        validateLodgingCharges(lodgingChagesBtn, validateExpenses, lodgingChagesField);
+        
+        //
+        validateExpenses.setOnAction(event -> {
+            double totalExpenses = numDays + amountAirfare + amountCarRental+ 0.27*numMilesDriven+ amountParkingFees+ amountTaxiCharges+ conRegFees+ lodgingCharges;
+            double totalAllowable = 1000.00;
+            double excess = 0;
+            double amountSaved = 0;
+            
+            if(amountParkingFees <= numDays * 10.0){
+                amountSaved += (numDays * 10.0) - amountParkingFees;
+            }else{
+                excess += amountParkingFees - (numDays * 10.0);
+            }
+            
+            if(amountTaxiCharges <= numDays * 20.0){
+                amountSaved += (numDays * 20.0) - amountTaxiCharges;
+            }else{
+                excess += amountTaxiCharges - (numDays * 20.0);
+            }
+            
+            if(lodgingCharges <= numDays * 95.0){
+                amountSaved += (numDays * 95.0) - lodgingCharges;
+            }else{
+                excess += lodgingCharges - (numDays * 95.0);
+            }
+            
+            System.out.println(totalExpenses);
+            System.out.println(totalAllowable);
+            System.out.println(excess);
+            System.out.println(amountSaved);
+            
+        });
         
         root.getChildren().add(gridPane);
-        Scene scene = new Scene(root, 300, 300);
+        Scene scene = new Scene(root, 500, 500);
         mainStage.setScene(scene);
         mainStage.show();
     }
@@ -109,92 +161,116 @@ public class App extends Application {
         launch();
     }
     
-    public static void ValidateNumDays(Button validateButton, TextField textField){
-        validateButton.setOnAction(event -> {
-            int numDays = 0;
+    public static void ValidateNumDays(Button validateFeldBtn, Button validateBtn, TextField textField){
+        validateFeldBtn.setOnAction(event -> {
             try{
                 numDays = Integer.parseInt(textField.getText());
+                isValidCounter += 1;
             }catch(NumberFormatException e){
                 System.out.println("BAD");
+                isValidCounter -= 1;
             }
+            ValidateFields(validateBtn);
         });
     }
     
-    public static void ValidateAmountAirfare(Button validateButton, TextField textField){
-        validateButton.setOnAction(event -> {
-            double amount = 0;
+    public static void ValidateAmountAirfare(Button validateFeldBtn, Button validateBtn, TextField textField){
+        validateFeldBtn.setOnAction(event -> {
             try{
-                amount = Integer.parseInt(textField.getText());
+                amountAirfare = Integer.parseInt(textField.getText());
+                isValidCounter += 1;
             }catch(NumberFormatException e){
                 System.out.println("BAD");
+                isValidCounter -= 1;
             }
+            ValidateFields(validateBtn);
         });
     }
     
-    public static void validateAmountCarRental(Button validateButton, TextField textField){
-        validateButton.setOnAction(event -> {
-            double amount = 0;
+    public static void validateAmountCarRental(Button validateFeldBtn, Button validateBtn, TextField textField){
+        validateFeldBtn.setOnAction(event -> {
             try{
-                amount = Integer.parseInt(textField.getText());
+                amountCarRental = Integer.parseInt(textField.getText());
+                isValidCounter += 1;
             }catch(NumberFormatException e){
                 System.out.println("BAD");
+                isValidCounter -= 1;
             }
+            ValidateFields(validateBtn);
         });
     }
     
-    public static void validateNumMilesDriven(Button validateButton, TextField textField){
-        validateButton.setOnAction(event -> {
-            double numMiles = 0;
+    public static void validateNumMilesDriven(Button validateFeldBtn, Button validateBtn, TextField textField){
+        validateFeldBtn.setOnAction(event -> {
             try{
-                numMiles = Integer.parseInt(textField.getText());
+                numMilesDriven = Integer.parseInt(textField.getText());
+                isValidCounter += 1;
             }catch(NumberFormatException e){
                 System.out.println("BAD");
+                isValidCounter -= 1;
             }
+            ValidateFields(validateBtn);
         });
     }
     
-    public static void validateAmountParking(Button validateButton, TextField textField){
-        validateButton.setOnAction(event -> {
-            int amount = 0;
+    public static void validateAmountParking(Button validateFeldBtn, Button validateBtn, TextField textField){
+        validateFeldBtn.setOnAction(event -> {
             try{
-                amount = Integer.parseInt(textField.getText());
+                amountParkingFees = Integer.parseInt(textField.getText());
+                isValidCounter += 1;
             }catch(NumberFormatException e){
                 System.out.println("BAD");
+                isValidCounter -= 1;
             }
+            ValidateFields(validateBtn);
         });
     }
     
-    public static void validateAmountTaxiCharges(Button validateButton, TextField textField){
-        validateButton.setOnAction(event -> {
-            double amount = 0;
+    public static void validateAmountTaxiCharges(Button validateFeldBtn, Button validateBtn, TextField textField){
+        validateFeldBtn.setOnAction(event -> {
             try{
-                amount = Integer.parseInt(textField.getText());
+                amountTaxiCharges = Integer.parseInt(textField.getText());
+                isValidCounter += 1;
             }catch(NumberFormatException e){
                 System.out.println("BAD");
+                isValidCounter -= 1;
             }
+            ValidateFields(validateBtn);
         });
     }
     
-    public static void validateConRefFee(Button validateButton, TextField textField){
-        validateButton.setOnAction(event -> {
-            double amount = 0;
+    public static void validateConRegFees(Button validateFeldBtn, Button validateBtn, TextField textField){
+        validateFeldBtn.setOnAction(event -> {
             try{
-                amount = Integer.parseInt(textField.getText());
+                conRegFees = Integer.parseInt(textField.getText());
+                isValidCounter += 1;
             }catch(NumberFormatException e){
                 System.out.println("BAD");
+                isValidCounter -= 1;
             }
+            ValidateFields(validateBtn);
         });
     }
     
-    public static void validateLodgingCharges(Button validateButton, TextField textField){
-        validateButton.setOnAction(event -> {
-            double amount = 0;
+    public static void validateLodgingCharges(Button validateFeldBtn, Button validateBtn, TextField textField){
+        validateFeldBtn.setOnAction(event -> {
             try{
-                amount = Integer.parseInt(textField.getText());
+                lodgingCharges = Integer.parseInt(textField.getText());
+                isValidCounter += 1;
             }catch(NumberFormatException e){
                 System.out.println("BAD");
+                isValidCounter -= 1;
             }
+            ValidateFields(validateBtn);
         });
+    }
+    
+    public static void ValidateFields(Button validateBtn){
+        if(isValidCounter == 8){
+            validateBtn.setDisable(false);
+        }else{
+            validateBtn.setDisable(true);
+        }
     }
 
 }
