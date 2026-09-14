@@ -1,5 +1,7 @@
 package com.mycompany.lab04_eric;
 
+//Github repo link: https://github.com/BoomEAE/Lab04_Eric.git
+
 import javafx.application.Application;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -15,6 +17,7 @@ import java.lang.Math;
 
 /**
  * JavaFX App
+ * @author Eirc Andre Evsei
  */
 public class App extends Application {
     
