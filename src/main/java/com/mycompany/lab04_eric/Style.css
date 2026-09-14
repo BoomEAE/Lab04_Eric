@@ -1,0 +1,13 @@
+#label1{}
+
+#label2{
+    -fx-font-fill:red;
+}
+
+btn1{
+    
+}
+
+btn2{
+    -fx-background-color:green;
+}
